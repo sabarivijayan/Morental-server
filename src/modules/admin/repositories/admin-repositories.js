@@ -1,6 +1,6 @@
 import Admin from '../models/admin-models.js'; // Sequelize model for admin
 
-class AuthRepository {
+class AdminRepository {
     
   async findAdminByEmail(email) {
     try {
@@ -15,4 +15,4 @@ class AuthRepository {
   }
 }
 
-export default new AuthRepository();
+export default new AdminRepository();

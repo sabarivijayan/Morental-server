@@ -1,12 +1,11 @@
 import Manufacturer from "../models/manufacturer-model.js"; // Sequelize model
 
 class ManufacturerRepository {
-  static async createManufacturer({ name, carModel, carType }) {
+  static async createManufacturer({ name, country }) {
     try {
       const manufacturer = await Manufacturer.create({
         name,
-        carModel,
-        carType,
+        country,
       });
       return manufacturer;
     } catch (error) {

@@ -1,7 +1,7 @@
-import ManufacturerRepository from '../repositories/manufacturer-repo.js';
+import ManufacturerRepository from '../repositories/manufacturer-repository.js';
 
 class ManufacturerHelper {
-  static async addManufacturer(name, carModel, carType) {
+  static async addManufacturer(name, country) {
     try {
       // Check if the manufacturer already exists by name
       const existingManufacturer = await ManufacturerRepository.findManufacturerByName(name);
@@ -12,8 +12,7 @@ class ManufacturerHelper {
       // Create manufacturer
       const manufacturer = await ManufacturerRepository.createManufacturer({
         name,
-        carModel,
-        carType,
+        country,
       });
 
       return manufacturer;
@@ -41,7 +40,7 @@ class ManufacturerHelper {
     }
   }
 
-  static async editManufacturer(id, name, carModel, carType) {
+  static async editManufacturer(id, name, country) {
     try {
       // Check if the manufacturer exists
       const existingManufacturer = await ManufacturerRepository.findManufacturerById(id);
@@ -52,8 +51,7 @@ class ManufacturerHelper {
       // Update manufacturer
       const updatedManufacturer = await ManufacturerRepository.updateManufacturer(id, {
         name,
-        carModel,
-        carType,
+        country,
       });
 
       return updatedManufacturer;

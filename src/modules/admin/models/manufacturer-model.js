@@ -11,11 +11,7 @@ const Manufacturer = sequelize.define('Manufacturer', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  carModel: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  carType: {
+  country: {
     type: DataTypes.STRING,
     allowNull: false,
   },

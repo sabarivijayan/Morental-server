@@ -19,18 +19,18 @@ const manufacturerResolver = {
   },
 
   Mutation: {
-    addManufacturer: async (_, { name, carModel, carType }) => {
+    addManufacturer: async (_, { name, country }) => {
       try {
-        return await ManufacturerHelper.addManufacturer(name, carModel, carType);
+        return await ManufacturerHelper.addManufacturer(name, country);
       } catch (error) {
         console.error('Error in addManufacturer mutation: ', error);
         throw new Error(error.message || 'Failed to add manufacturer');
       }
     },
 
-    editManufacturer: async (_, { id, name, carModel, carType }) => {
+    editManufacturer: async (_, { id, name, country }) => {
       try {
-        return await ManufacturerHelper.editManufacturer(id, name, carModel, carType);
+        return await ManufacturerHelper.editManufacturer(id, name, country);
       } catch (error) {
         console.error('Error editing manufacturer: ', error);
         throw new Error(error.message || 'Failed to edit manufacturer');

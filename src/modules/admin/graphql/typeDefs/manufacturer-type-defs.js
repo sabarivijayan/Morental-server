@@ -4,8 +4,7 @@ const manufactureTypeDefs = gql`
   type Manufacturer {
     id: ID!
     name: String!
-    carModel: String!
-    carType: String!
+    country: String!
   }
 
   type Query {
@@ -14,8 +13,8 @@ const manufactureTypeDefs = gql`
   }
 
   type Mutation {
-    addManufacturer(name: String!, carModel: String!, carType: String!): Manufacturer
-    editManufacturer(id: ID!, name: String, carModel: String, carType: String): Manufacturer
+    addManufacturer(name: String!, country: String!): Manufacturer
+    editManufacturer(id: ID!, name: String, country: String): Manufacturer
     deleteManufacturer(id: ID!): Boolean
   }
 `;
