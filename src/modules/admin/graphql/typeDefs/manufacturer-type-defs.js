@@ -1,29 +1,23 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
-const manufacturerTypeDefs = gql`
+const manufactureTypeDefs = gql`
   type Manufacturer {
     id: ID!
     name: String!
-    carModelName: String!
-    carType: String!
-  }
-
-  input CreateManufacturerInput {
-    name: String!
-    carModelName: String!
+    carModel: String!
     carType: String!
   }
 
   type Query {
-    getAllManufacturers: [Manufacturer!]!
-    getManufacturerById(id: ID!): Manufacturer
+    manufacturers: [Manufacturer]
+    manufacturer(id: ID!): Manufacturer
   }
 
   type Mutation {
-    createManufacturer(input: CreateManufacturerInput!): Manufacturer!
-    updateManufacturer(id: ID!, input: CreateManufacturerInput!): Manufacturer!
-    deleteManufacturer(id: ID!): Boolean!
+    addManufacturer(name: String!, carModel: String!, carType: String!): Manufacturer
+    editManufacturer(id: ID!, name: String, carModel: String, carType: String): Manufacturer
+    deleteManufacturer(id: ID!): Boolean
   }
 `;
 
-export default manufacturerTypeDefs;
+export default manufactureTypeDefs;

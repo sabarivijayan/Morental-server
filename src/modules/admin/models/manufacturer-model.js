@@ -1,17 +1,17 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import sequelize from '../config/database.js'; // Assuming you have a configured sequelize instance
 
-export const Manufacturer = sequelize.define('Manufacturer', {
+const Manufacturer = sequelize.define('Manufacturer', {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  carModelName: {
+  carModel: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -20,3 +20,5 @@ export const Manufacturer = sequelize.define('Manufacturer', {
     allowNull: false,
   },
 });
+
+export default Manufacturer;

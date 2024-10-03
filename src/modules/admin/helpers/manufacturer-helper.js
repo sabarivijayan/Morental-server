@@ -1,73 +1,77 @@
+import ManufacturerRepository from '../repositories/manufacturer-repo.js';
+
 class ManufacturerHelper {
-    /**
-     * Validates the input data for creating or updating a manufacturer.
-     * @param {Object} input - The input object containing manufacturer data.
-     * @param {string} input.name - The name of the manufacturer.
-     * @param {string} input.carModelName - The car model name.
-     * @param {string} input.carType - The type of the car (e.g., SUV, Sedan).
-     * @throws Will throw an error if validation fails.
-     */
-    static validateManufacturerInput(input) {
-      const { name, carModelName, carType } = input;
-  
-      if (!name || typeof name !== 'string' || name.trim().length === 0) {
-        throw new Error('Manufacturer name is required and must be a non-empty string.');
+  static async addManufacturer(name, carModel, carType) {
+    try {
+      // Check if the manufacturer already exists by name
+      const existingManufacturer = await ManufacturerRepository.findManufacturerByName(name);
+      if (existingManufacturer) {
+        throw new Error('Manufacturer with the same name already exists');
       }
-  
-      if (!carModelName || typeof carModelName !== 'string' || carModelName.trim().length === 0) {
-        throw new Error('Car model name is required and must be a non-empty string.');
-      }
-  
-      const validCarTypes = ['SUV', 'Sedan', 'Hatchback', 'Truck', 'Convertible'];
-      if (!carType || !validCarTypes.includes(carType)) {
-        throw new Error(`Car type is required and must be one of the following: ${validCarTypes.join(', ')}`);
-      }
-    }
-  
-    /**
-     * Formats the manufacturer data, ensuring proper casing and trimming whitespace.
-     * This can be useful for consistent data formatting.
-     * @param {Object} input - The manufacturer input data.
-     * @returns {Object} - The formatted manufacturer data.
-     */
-    static formatManufacturerData(input) {
-      return {
-        name: ManufacturerHelper.capitalizeWords(input.name.trim()),
-        carModelName: ManufacturerHelper.capitalizeWords(input.carModelName.trim()),
-        carType: input.carType.trim(),
-      };
-    }
-  
-    /**
-     * Capitalizes the first letter of each word in a string.
-     * @param {string} str - The input string.
-     * @returns {string} - The string with each word capitalized.
-     */
-    static capitalizeWords(str) {
-      return str.replace(/\b\w/g, (char) => char.toUpperCase());
-    }
-  
-    /**
-     * Sanitizes input to prevent common SQL injection patterns or dangerous characters.
-     * @param {string} value - The input string to sanitize.
-     * @returns {string} - The sanitized string.
-     */
-    static sanitizeInput(value) {
-      return value.replace(/[<>`"'\\/]/g, '');
-    }
-  
-    /**
-     * Generates a formatted error response for client-facing errors.
-     * @param {Error} error - The error object to format.
-     * @returns {Object} - A formatted error object.
-     */
-    static formatErrorResponse(error) {
-      return {
-        message: error.message,
-        stack: process.env.NODE_ENV === 'production' ? null : error.stack,
-      };
+
+      // Create manufacturer
+      const manufacturer = await ManufacturerRepository.createManufacturer({
+        name,
+        carModel,
+        carType,
+      });
+
+      return manufacturer;
+    } catch (error) {
+      console.error('Error adding manufacturer:', error);
+      throw new Error(error.message || 'Failed to add manufacturer');
     }
   }
-  
-  module.exports = ManufacturerHelper;
-  
+
+  static async getManufacturers() {
+    try {
+      return await ManufacturerRepository.findAll();
+    } catch (error) {
+      console.error('Error fetching manufacturers:', error);
+      throw new Error('Failed to fetch manufacturers');
+    }
+  }
+
+  static async getManufacturerById(id) {
+    try {
+      return await ManufacturerRepository.findManufacturerById(id);
+    } catch (error) {
+      console.error('Error fetching manufacturer by ID:', error);
+      throw new Error('Failed to fetch manufacturer');
+    }
+  }
+
+  static async editManufacturer(id, name, carModel, carType) {
+    try {
+      // Check if the manufacturer exists
+      const existingManufacturer = await ManufacturerRepository.findManufacturerById(id);
+      if (!existingManufacturer) {
+        throw new Error('Manufacturer not found');
+      }
+
+      // Update manufacturer
+      const updatedManufacturer = await ManufacturerRepository.updateManufacturer(id, {
+        name,
+        carModel,
+        carType,
+      });
+
+      return updatedManufacturer;
+    } catch (error) {
+      console.error('Error editing manufacturer:', error);
+      throw new Error(error.message || 'Failed to edit manufacturer');
+    }
+  }
+
+  static async deleteManufacturer(id) {
+    try {
+      const result = await ManufacturerRepository.deleteManufacturer(id);
+      return result;
+    } catch (error) {
+      console.error('Error deleting manufacturer:', error);
+      throw new Error('Failed to delete manufacturer');
+    }
+  }
+}
+
+export default ManufacturerHelper;

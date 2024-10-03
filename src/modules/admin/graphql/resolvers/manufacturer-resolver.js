@@ -1,56 +1,51 @@
-import Manufacturer from '../repositories/Manufacturer.js';
+import ManufacturerHelper from '../helpers/manufacturer-helper.js';
 
-export const manufacturerResolvers = {
+const manufacturerResolver = {
   Query: {
-    getAllManufacturers: async () => {
+    getManufacturers: async () => {
       try {
-        return await Manufacturer.getAllManufacturers();
+        return await ManufacturerHelper.getManufacturers();
       } catch (error) {
-        throw new Error('Failed to retrieve manufacturers');
+        throw new Error(error.message || 'Failed to fetch manufacturers');
       }
     },
-    getManufacturerById: async (_, { id }) => {
+    getManufacturer: async (_, { id }) => {
       try {
-        return await Manufacturer.getManufacturerById(id);
+        return await ManufacturerHelper.getManufacturerById(id);
       } catch (error) {
-        throw new Error('Failed to retrieve manufacturer');
+        throw new Error(error.message || 'Failed to fetch manufacturer');
       }
     },
   },
+
   Mutation: {
-    createManufacturer: async (_, { input }) => {
+    addManufacturer: async (_, { name, carModel, carType }) => {
       try {
-        return await Manufacturer.createManufacturer(input);
+        return await ManufacturerHelper.addManufacturer(name, carModel, carType);
       } catch (error) {
-        throw new Error('Failed to create manufacturer');
+        console.error('Error in addManufacturer mutation: ', error);
+        throw new Error(error.message || 'Failed to add manufacturer');
       }
     },
-    updateManufacturer: async (_, { id, name, carModelName, carType }) => {
-        // Update logic for the manufacturer
-        try {
-          const manufacturer = await Manufacturer.findByPk(id);
-          if (!manufacturer) {
-            throw new Error("Manufacturer not found");
-          }
-  
-          // Update fields if they are provided
-          if (name) manufacturer.name = name;
-          if (carModelName) manufacturer.carModelName = carModelName;
-          if (carType) manufacturer.carType = carType;
-  
-          await manufacturer.save();
-          return manufacturer;
-        } catch (error) {
-          console.error('Error updating manufacturer:', error);
-          throw new Error('Failed to update manufacturer');
-        }
-      },
-    deleteManufacturer: async (_, { id }) => {
-      const manufacturer = await Manufacturer.findByPk(id);
-      if (!manufacturer) throw new Error("Manufacturer not found");
 
-      await manufacturer.destroy();
-      return `Manufacturer with id ${id} deleted successfully`;
+    editManufacturer: async (_, { id, name, carModel, carType }) => {
+      try {
+        return await ManufacturerHelper.editManufacturer(id, name, carModel, carType);
+      } catch (error) {
+        console.error('Error editing manufacturer: ', error);
+        throw new Error(error.message || 'Failed to edit manufacturer');
+      }
+    },
+
+    deleteManufacturer: async (_, { id }) => {
+      try {
+        return await ManufacturerHelper.deleteManufacturer(id);
+      } catch (error) {
+        console.error('Error in delete manufacturer mutation: ', error);
+        throw new Error(error.message || 'Failed to delete manufacturer');
+      }
     },
   },
 };
+
+export default manufacturerResolver;

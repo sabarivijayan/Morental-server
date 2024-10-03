@@ -1,69 +1,75 @@
-import { Manufacturer } from '../models/manufacturer-model';
-import ManufacturerHelper from '../helpers/manufacturer-helper';
-
+import Manufacturer from "../models/manufacturer-model.js"; // Sequelize model
 
 class ManufacturerRepository {
-  async getAllManufacturers() {
+  static async createManufacturer({ name, carModel, carType }) {
     try {
-      const manufacturers = await Manufacturer.findAll();
-      return manufacturers;
-    } catch (error) {
-      throw new Error('Database query failed');
-    }
-  }
-
-  async getManufacturerById(id) {
-    try {
-      const sanitizedId = ManufacturerHelper.sanitizeInput(id);
-      const manufacturer = await Manufacturer.findByPk(sanitizedId);
-      if (!manufacturer) {
-        throw new Error('Manufacturer not found');
-      }
+      const manufacturer = await Manufacturer.create({
+        name,
+        carModel,
+        carType,
+      });
       return manufacturer;
     } catch (error) {
-      throw new Error('Database query failed');
+      console.error("Error creating manufacturer in the database:", error);
+      throw new Error("Failed to create manufacturer");
     }
   }
 
-  async createManufacturer(input) {
+  static async findAll() {
     try {
-      ManufacturerHelper.validateManufacturerInput(input);
-      const formattedInput = ManufacturerHelper.formatManufacturerData(input);
-      const manufacturer = await Manufacturer.create(formattedInput);
-      return manufacturer;
+      return await Manufacturer.findAll();
     } catch (error) {
-      throw new Error(ManufacturerHelper.formatErrorResponse(error));
+      console.error("Error fetching manufacturers:", error);
+      throw new Error("Failed to fetch manufacturers");
     }
   }
 
-  async updateManufacturer(id, input) {
+  static async findManufacturerById(id) {
     try {
-      ManufacturerHelper.validateManufacturerInput(input);
       const manufacturer = await Manufacturer.findByPk(id);
       if (!manufacturer) {
-        throw new Error('Manufacturer not found');
+        throw new Error("Manufacturer not found");
       }
-      const formattedInput = ManufacturerHelper.formatManufacturerData(input);
-      await manufacturer.update(formattedInput);
       return manufacturer;
     } catch (error) {
-      throw new Error(ManufacturerHelper.formatErrorResponse(error));
+      console.error("Error fetching manufacturer by ID:", error);
+      throw new Error("Failed to fetch manufacturer");
     }
   }
 
-  async deleteManufacturer(id) {
+  static async findManufacturerByName(name) {
     try {
-      const sanitizedId = ManufacturerHelper.sanitizeInput(id);
-      const manufacturer = await Manufacturer.findByPk(sanitizedId);
-      if (!manufacturer) {
-        throw new Error('Manufacturer not found');
-      }
-      await manufacturer.destroy();
-      return true;
+      const manufacturer = await Manufacturer.findOne({ where: { name } });
+      return manufacturer;
     } catch (error) {
-      throw new Error(ManufacturerHelper.formatErrorResponse(error));
+      console.error("Error finding manufacturer by name:", error);
+      throw new Error("Failed to find manufacturer");
+    }
+  }
+
+  static async updateManufacturer(id, updates) {
+    try {
+      const manufacturer = await Manufacturer.findByPk(id);
+      if (!manufacturer) {
+        throw new Error("Manufacturer not found");
+      }
+      await manufacturer.update(updates);
+      return manufacturer;
+    } catch (error) {
+      console.error("Error updating manufacturer:", error);
+      throw new Error("Failed to update manufacturer");
+    }
+  }
+
+  static async deleteManufacturer(id) {
+    try {
+      const result = await Manufacturer.destroy({ where: { id } });
+      return result > 0;
+    } catch (error) {
+      console.error("Error deleting manufacturer:", error);
+      throw new Error("Failed to delete manufacturer");
     }
   }
 }
 
-module.exports = new ManufacturerRepository();
+export default ManufacturerRepository;
