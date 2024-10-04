@@ -1,4 +1,4 @@
-import Admin from '../models/admin-models.js'; // Sequelize model for admin
+import Admin from "../models/admin-model.js";
 
 class AdminRepository {
     

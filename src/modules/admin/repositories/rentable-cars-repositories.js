@@ -32,6 +32,9 @@ class RentableRepository {
       throw new Error("Database error occured while adding rentable cars");
     }
   }
+
+  static async updateRentableCars(data) {
+  }
 }
 
 export default RentableRepository;

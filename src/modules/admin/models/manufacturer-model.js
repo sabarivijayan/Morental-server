@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js'; // Assuming you have a configured sequelize instance
+import sequelize from '../../../config/database.js'; // Assuming you have a configured sequelize instance
 
 const Manufacturer = sequelize.define('Manufacturer', {
   id: {

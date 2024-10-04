@@ -8,8 +8,8 @@ const manufactureTypeDefs = gql`
   }
 
   type Query {
-    manufacturers: [Manufacturer]
-    manufacturer(id: ID!): Manufacturer
+    getManufacturers: [Manufacturer]
+    getManufacturer(id: ID!): Manufacturer
   }
 
   type Mutation {

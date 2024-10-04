@@ -1,5 +1,5 @@
-import adminHelper from "../../helpers/admin-helper";
-import Admin from "../../models/admin-model";
+import adminHelper from "../../helpers/admin-helper.js";
+import Admin from "../../models/admin-model.js";
 
 const authResolver ={
     Query:{

@@ -1,6 +1,9 @@
 import { gql } from 'apollo-server-express';
 
 const CarTypeDefs = gql`
+
+  scalar Upload
+
   type Car {
     id: ID!
     name: String!
@@ -35,7 +38,7 @@ const CarTypeDefs = gql`
     description: String!
     quantity: String!
     primaryImage: Upload
-    secondaryImages: [Upload!]!
+    secondaryImages: [Upload!]
   }
 
   type Query {

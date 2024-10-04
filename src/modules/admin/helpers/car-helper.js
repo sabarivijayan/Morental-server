@@ -1,4 +1,4 @@
-import CarRepository from "../repositories/car-repositories";
+import CarRepository from "../repositories/car-repositories.js";
 import minioClient from "../../../config/minio.js";
 import { v4 as uuidv4 } from "uuid";
 import mime from "mime-types";

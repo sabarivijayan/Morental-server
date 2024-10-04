@@ -1,4 +1,4 @@
-import ManufacturerHelper from '../helpers/manufacturer-helper.js';
+import ManufacturerHelper from "../../helpers/manufacturer-helper.js";
 
 const manufacturerResolver = {
   Query: {

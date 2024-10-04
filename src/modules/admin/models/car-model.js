@@ -1,12 +1,13 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../../../config/database.js";
-import Manufacturer from "./manufacturer-model";
+import Manufacturer from "./manufacturer-model.js";
 
 class Car extends Model {}
 
 Car.init({
   manufacturerId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     references: {
       model: "Manufacturers",
