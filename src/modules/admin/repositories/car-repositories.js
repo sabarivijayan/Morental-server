@@ -1,5 +1,5 @@
 import Car from "../models/car-model.js";
-
+import { deletecarFromTypesense } from "./typesense-repositories.js";
 class CarRepository{
 
     static async createCar(carData) {
@@ -15,8 +15,9 @@ class CarRepository{
                 numberOfSeats: car.numberOfSeats,
                 fuelType: car.fuelType,
                 transmissionType: car.transmissionType,
-                primaryImageUrl: car.primaryImage,
-                secondaryImagesUrls: car.secondaryImages,
+                primaryImageUrl: car.primaryImageUrl,
+                secondaryImagesUrls: car.secondaryImagesUrls,
+                year: car.year,
             };
         }catch(error){
             console.log('Error creating car: ', error);
@@ -66,6 +67,7 @@ class CarRepository{
             if(deletedCar === 0){
                 return null;
             }
+            await deletecarFromTypesense(id);
             return{ id };
         } catch (error) {
             console.error('Error deleting car from database: ', error);

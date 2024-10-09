@@ -51,6 +51,10 @@ Car.init({
     type: DataTypes.ARRAY(DataTypes.STRING(1000)),
     allowNull: true,
   },
+  year:{
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 },{
     sequelize,
     modelName: "Car",

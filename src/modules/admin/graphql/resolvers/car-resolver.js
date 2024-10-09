@@ -45,6 +45,7 @@ const carResolvers = {
         transmissionType,
         quantity,
         manufacturerId,
+        year,
       } = input;
       try {
         const car = await CarHelper.createCar({
@@ -58,6 +59,7 @@ const carResolvers = {
           quantity,
           primaryImage,
           secondaryImages,
+          year,
         });
         return car;
       } catch (error) {
@@ -85,6 +87,7 @@ const carResolvers = {
         quantity,
         primaryImage,
         secondaryImages,
+        year,
       } = input;
       try {
         const updatedCar = await CarHelper.updateCar({
@@ -98,6 +101,7 @@ const carResolvers = {
           quantity,
           primaryImage,
           secondaryImages,
+          year,
         });
         return updatedCar;
       } catch (error) {

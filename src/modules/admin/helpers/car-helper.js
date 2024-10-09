@@ -14,6 +14,7 @@ class CarHelper {
     manufacturerId,
     primaryImage,
     secondaryImages,
+    year,
   }) {
     try {
       const existingCar = await CarRepository.findCarByNameAndManufacturer(
@@ -46,6 +47,7 @@ class CarHelper {
         transmissionType,
         primaryImageUrl,
         secondaryImagesUrls,
+        year,
       });
 
       return car;
@@ -129,7 +131,7 @@ class CarHelper {
       await Promise.all(
         car.secondaryImagesUrls.map((imageUrl)=>this.deleteImageFromMinio(imageUrl))
       );
-      
+
       return deletedCar;
     } catch (error) {
       console.error("Error deleting Car:", error.message);
@@ -158,6 +160,7 @@ class CarHelper {
     quantity,
     primaryImage,
     secondaryImages,
+    year,
   }) {
     try {
       const existingCar = await CarRepository.findCarByNameAndManufacturer(
@@ -201,6 +204,7 @@ class CarHelper {
         quantity,
         primaryImageUrl,
         secondaryImagesUrls,
+        year
       });
       return updateCar;
     } catch (error) {

@@ -30,7 +30,8 @@
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3",
-    "server": "file:"
+    "server": "file:",
+    "typesense": "^1.8.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

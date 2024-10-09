@@ -16,6 +16,7 @@ const CarTypeDefs = gql`
     manufacturerId: String!
     primaryImageUrl: String
     secondaryImagesUrls: [String]
+    year: String!
   }
 
   input CarInput{
@@ -27,6 +28,7 @@ const CarTypeDefs = gql`
     description: String
     quantity: String!
     manufacturerId: String!
+    year: String!
   }
 
   input EditCarInput {
@@ -39,6 +41,7 @@ const CarTypeDefs = gql`
     quantity: String!
     primaryImage: Upload!
     secondaryImages: [Upload!]
+    year: String!
   }
 
   type Query {

@@ -2,7 +2,9 @@ import { gql } from 'apollo-server-express'
 
 const RentableCarTypeDefs = gql`
     scalar Float
-    scalar input
+    scalar Int
+
+
     type Manufacturer{
         id: ID!
         name: String!
@@ -12,10 +14,16 @@ const RentableCarTypeDefs = gql`
         id: ID!
         manufacturer: Manufacturer
         name: String!
-        description: String
+        type: String!
+        numberOfSeats: String!
+        fuelType: String!
+        transmissionType: String!
+        description: String!
         quantity: String!
+        manufacturerId: String!
         primaryImageUrl: String
         secondaryImagesUrls: [String]
+        year: String!
     }
 
     type RentableCar{
