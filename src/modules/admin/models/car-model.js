@@ -24,19 +24,19 @@ Car.init({
     allowNull: false,
   },
   quantity: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   numberOfSeats: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   fuelType: {
-    type: DataTypes.ENUM("petrol", "diesel"),
+    type: DataTypes.STRING,
     allowNull: false,
   },
   transmissionType: {
-    type: DataTypes.ENUM("automatic", "manual"),
+    type: DataTypes.STRING,
     allowNull: false,
   },
   description: {

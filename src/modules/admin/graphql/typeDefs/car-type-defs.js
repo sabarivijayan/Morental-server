@@ -8,20 +8,20 @@ const CarTypeDefs = gql`
     id: ID!
     name: String!
     type: String!
-    numberOfSeats: Int!
+    numberOfSeats: String!
     fuelType: String!
     transmissionType: String!
     description: String!
-    quantity: Int!
+    quantity: String!
     manufacturerId: String!
-    primaryImageUrl: String!
-    secondaryImagesUrls: [String!]!
+    primaryImageUrl: String
+    secondaryImagesUrls: [String]
   }
 
   input CarInput{
     name: String!
     type: String!
-    numberOfSeats: Int!
+    numberOfSeats: String!
     fuelType: String!
     transmissionType: String!
     description: String
@@ -32,12 +32,12 @@ const CarTypeDefs = gql`
   input EditCarInput {
     name: String!
     type: String!
-    numberOfSeats: Int!
+    numberOfSeats: String!
     fuelType: String!
     transmissionType: String!
     description: String!
     quantity: String!
-    primaryImage: Upload
+    primaryImage: Upload!
     secondaryImages: [Upload!]
   }
 

@@ -15,8 +15,8 @@ class CarRepository{
                 numberOfSeats: car.numberOfSeats,
                 fuelType: car.fuelType,
                 transmissionType: car.transmissionType,
-                primaryImage: car.primaryImage,
-                secondaryImages: car.secondaryImages,
+                primaryImageUrl: car.primaryImage,
+                secondaryImagesUrls: car.secondaryImages,
             };
         }catch(error){
             console.log('Error creating car: ', error);

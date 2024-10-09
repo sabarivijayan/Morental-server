@@ -6,7 +6,7 @@ import cors from "cors";
 import { graphqlUploadExpress } from "graphql-upload";
 import dotenv from "dotenv";
 import "./modules/admin/models/relations-model.js";
-
+import seedAdmin from "./seed.js"
 dotenv.config();
 
 const app = express();
@@ -18,7 +18,7 @@ const server = new ApolloServer({
 
 
   formatError: (error) => {
-    console.log("Error in format");
+    console.log(error);
 
     if (error) {
       console.log(err);

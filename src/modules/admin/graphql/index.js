@@ -7,7 +7,10 @@ import manufactureTypeDefs from "./typeDefs/manufacturer-type-defs.js";
 import carResolvers from "./resolvers/car-resolver.js";
 import CarTypeDefs from "./typeDefs/car-type-defs.js";
 
-const adminTypeDefs = [authTypeDefs, manufactureTypeDefs, CarTypeDefs]; // Combine typeDefs
-const adminResolvers = [authResolver, manufacturerResolver, carResolvers]; // Combine resolvers
+import RentableCarResolvers from "./resolvers/rentable-cars-resolvers.js";
+import RentableCarTypeDefs from "./typeDefs/rentable-car-type-defs.js";
+
+const adminTypeDefs = [authTypeDefs, manufactureTypeDefs, CarTypeDefs, RentableCarTypeDefs]; // Combine typeDefs
+const adminResolvers = [authResolver, manufacturerResolver, carResolvers, RentableCarResolvers]; // Combine resolvers
 
 export { adminTypeDefs, adminResolvers };

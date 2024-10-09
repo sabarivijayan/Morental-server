@@ -1,6 +1,5 @@
 import CarRepository from "../repositories/car-repositories.js";
 import minioClient from "../../../config/minio.js";
-import { v4 as uuidv4 } from "uuid";
 import mime from "mime-types";
 
 class CarHelper {
@@ -61,7 +60,7 @@ class CarHelper {
     try {
       const { createReadStream, filename } = await file;
       const stream = createReadStream();
-      const uniqueFilename = `${folder}/${uuidv4()}-${filename}`;
+      const uniqueFilename = `${folder}/${filename}`;
       const contentType = mime.lookup(filename) || "application/octet-stream";
 
       await new Promise((resolve, reject) => {
@@ -79,10 +78,7 @@ class CarHelper {
         );
       });
 
-      const imageUrl = await minioClient.presignedGetObject(
-        process.env.MINIO_BUCKET_NAME,
-        uniqueFilename
-      );
+      const imageUrl = `http://localhost:9000/${process.env.MINIO_BUCKET_NAME}/${uniqueFilename}`;
 
       return imageUrl;
     } catch (error) {
@@ -100,9 +96,40 @@ class CarHelper {
     }
   }
 
+  static async deleteImageFromMinio(imageUrl){
+    try{
+      const filePath = imageUrl.replace(`http:localhost:9000/${process.env.MINIO_BUCKET_NAME}/`, "");
+      await new Promise((resolve, reject) =>{
+        minioClient.removeObject(
+          process.env.MINIO_BUCKET_NAME,
+          filePath, (error) => {
+            if (error) {
+              return reject(new Error("MinIO delete failed"));
+            }
+            resolve();
+          }
+        );
+      });
+    }catch(error){
+      console.error("Error deleting image from MinIO: ", error.message);
+      throw new Error("Failed to delete image from MinIO");
+    }
+  }
+
   static async deleteCarById(id) {
     try {
+      const car = await CarRepository.getCarById(id);
+      if(!car){
+        throw new Error("Car not found");
+      }
+      
       const deletedCar = await CarRepository.deleteCarById(id);
+
+      await this.deleteImageFromMinio(car.primaryImageUrl);
+      await Promise.all(
+        car.secondaryImagesUrls.map((imageUrl)=>this.deleteImageFromMinio(imageUrl))
+      );
+      
       return deletedCar;
     } catch (error) {
       console.error("Error deleting Car:", error.message);
